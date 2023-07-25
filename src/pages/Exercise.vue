@@ -6,7 +6,7 @@
 	OK 2) Bind these properties to the two input fields
 	OK 3) Display the name and age in the beige box (first line in bold)
 	OK 4) Use a computed property to display the age plus 10 years (second line in bold)
-	5) Display the number of characters in the name (third line)
+	OK 5) Display the number of characters in the name (third line)
 	6) Use a filter to display the name in upper case (fourth line)
 	7) Only show the beige box if both a name and age have been entered, otherwise, show the red box ("Please enter a name and age.")
 	8) Use v-show to only show the error messages next to the fields if the name is longer than 15 characters and the age is greater than 100
@@ -35,8 +35,8 @@
   	<div class="description q-mb-lg">
   		<p>My name is <b>{{ name }}</b> and I'm <b>{{ age }}</b> years old.</p>
   		<p>In 10 years I will be <b>{{ agePlusTen }}</b>.</p>
-  		<p>My name is <b>{{ name.length }}</b> characters long.</p>
-  		<p>My name in uppercase is <b>{{ name.toUpperCase() }}</b>.</p>
+  		<p>My name is <b>{{ numOfChars }}</b> characters long.</p>
+  		<p>My name in uppercase is <b>{{ name | toUpperCase }}</b>.</p>
   	</div>
 		<div class="no-details">
 			<p>Please enter a name and age.</p>
@@ -55,6 +55,14 @@
 		computed: {
 			agePlusTen() {
 				return this.age + 10;
+			},
+			numOfChars() {
+				return this.name.length;
+			}
+		},
+		filters: {
+			toUpperCase(value) {
+				return value.toUpperCase();
 			}
 		}
 	}
