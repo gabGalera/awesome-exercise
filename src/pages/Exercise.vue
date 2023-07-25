@@ -12,8 +12,8 @@
 	Ok 8) Use v-show to only show the error messages next to the fields if the name is longer than 15 characters and the age is greater than 100
 	OK 9) Add the class "error" to the input fields if they break the same rules
 	OK 10) When the "Generate Random Person" button is clicked, generated a random name (from an array you create) and a random age from 1 - 100. These new values should be reflected everywhere in the view
-	11) Create a directive which auto-focuses the name field when the page loads
-	12) Make it so a random person is generated when the page first loads
+	OK 11) Create a directive which auto-focuses the name field when the page loads
+	OK 12) Make it so a random person is generated when the page first loads
 
 	-->
   <q-page padding>
@@ -24,6 +24,7 @@
 				type="text" 
 				v-model="name"
 				:class="{ 'error' : errorName }"
+				v-autofocus
 			> 
 	  		<label 
 				v-show="errorName"
@@ -43,7 +44,9 @@
 			>Please enter an age between 1 - 100</label>
 		  </div>
 		  <div class="row">
-		  	<button>Generate Random Person</button>
+		  	<button
+				@click="generateRandomPerson"
+			>Generate Random Person</button>
 		  </div>
   	</div>
   	<div
@@ -92,18 +95,28 @@
 			},
 			errorAge() {
 				return 0 >= this.age || this.age > 100;
-			},
-			pickRandomNames() {
-				return this.names[Math.floor(Math.random() * this.names.length)];
-			},
+			}
+		},
+		methods: {
+			generateRandomPerson() {
+				this.name = this.names[Math.floor(Math.random() * this.names.length)];
+				this.age = Math.floor(Math.random() * 100)
+			}
 		},
 		filters: {
 			toUpperCase(value) {
 				return value.toUpperCase();
 			}
 		},
+		directives: {
+			autofocus: {
+				inserted(el) {
+					el.focus()
+				}
+			}
+		},
 		mounted() {
-			this.name = this.pickRandomNames;
+			this.name = this.names[Math.floor(Math.random() * this.names.length)];
 			this.age = Math.floor(Math.random() * 100)
 		}
 	}
