@@ -10,8 +10,8 @@
 	OK 6) Use a filter to display the name in upper case (fourth line)
 	OK 7) Only show the beige box if both a name and age have been entered, otherwise, show the red box ("Please enter a name and age.")
 	Ok 8) Use v-show to only show the error messages next to the fields if the name is longer than 15 characters and the age is greater than 100
-	9) Add the class "error" to the input fields if they break the same rules
-	10) When the "Generate Random Person" button is clicked, generated a random name (from an array you create) and a random age from 1 - 100. These new values should be reflected everywhere in the view
+	OK 9) Add the class "error" to the input fields if they break the same rules
+	OK 10) When the "Generate Random Person" button is clicked, generated a random name (from an array you create) and a random age from 1 - 100. These new values should be reflected everywhere in the view
 	11) Create a directive which auto-focuses the name field when the page loads
 	12) Make it so a random person is generated when the page first loads
 
@@ -23,7 +23,7 @@
 	  		<input 
 				type="text" 
 				v-model="name"
-				:class="{ 'error' : errorName}"
+				:class="{ 'error' : errorName }"
 			> 
 	  		<label 
 				v-show="errorName"
@@ -35,7 +35,7 @@
 		  	<input 
 				type="number" 
 				v-model="age"
-				:class="{ 'error' : errorAge}"
+				:class="{ 'error' : errorAge }"
 			>
 	  		<label 
 				v-show="errorAge"
@@ -68,8 +68,9 @@
 	export default {
 		data() {
 			return {
-				name: 'Freduardo',
-				age: 10
+				name: '',
+				age: 0,
+				names: ['Jennifer', 'Carlos', 'Pedro']
 			}
 		},
 		computed: {
@@ -91,12 +92,19 @@
 			},
 			errorAge() {
 				return 0 >= this.age || this.age > 100;
-			}
+			},
+			pickRandomNames() {
+				return this.names[Math.floor(Math.random() * this.names.length)];
+			},
 		},
 		filters: {
 			toUpperCase(value) {
 				return value.toUpperCase();
 			}
+		},
+		mounted() {
+			this.name = this.pickRandomNames;
+			this.age = Math.floor(Math.random() * 100)
 		}
 	}
 </script>
